@@ -1,9 +1,3 @@
-/*
-
-ŞERİF KAAN TANIL 425458
-HALİL İBRAHİM KORKMAZ 425488 
-
-*/
 
 #include <iostream>
 #include <string>
