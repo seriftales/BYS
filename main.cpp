@@ -24,7 +24,6 @@ void printStudentList(const vector<Student>& list) {
 }
 
 int main() {
-    // Hardcoded yol yerine proje dizininde bir dosya
     StudentManager manager("students.csv");
     manager.loadFromFile();
 
@@ -82,7 +81,6 @@ int main() {
             cout << "Maksimum notu giriniz: "; 
             cin >> maxNot;
 
-            // Backend'den listeyi iste ve yazdırma fonksiyonuna gönder
             vector<Student> filtrelenmisListe = manager.getStudentsByGradeRange(minNot, maxNot);
             printStudentList(filtrelenmisListe);
         }
@@ -93,7 +91,6 @@ int main() {
             cout << "Guncellenecek ogrencinin numarasi: "; 
             cin >> id;
     
-             // Yalnızca aranan numara varsa yeni notları iste
             if (manager.findStudentById(id) != nullptr) {
                 cout << "Yeni Vize 1: "; cin >> yeniVize1;
                 cout << "Yeni Vize 2: "; cin >> yeniVize2;
@@ -108,16 +105,13 @@ int main() {
             }
         }
 
-        // 8. Seçenek: Numaraya Göre Arama
         else if (secim == 8) {
             int arananId;
             cout << "Aradiginiz ogrencinin numarasini giriniz: ";
             cin >> arananId;
 
-            // Backend'e sor: Bu numarada biri var mı?
             const Student* bulunanOgrenci = manager.findStudentById(arananId);
 
-            // Eğer öğrenci bulunduysa (pointer boş değilse) yazdır
             if (bulunanOgrenci != nullptr) {
                 printStudent(*bulunanOgrenci);
             } else {

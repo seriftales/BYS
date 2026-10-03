@@ -3,6 +3,7 @@
 
 #include <string>
 
+// Öğrenci Sınıfı (Veri Modeli)
 class Student {
 private:
     int id;
@@ -18,7 +19,6 @@ private:
 public:
     Student(int id, const std::string& name, float mid, float sec, float fin, float task, int abs);
 
-    // Getter'lar
     int getId() const;
     std::string getName() const;
     float getMidterm() const;
@@ -27,7 +27,6 @@ public:
     float getTask() const;
     int getAbsences() const;
 
-    // İş Mantığı
     float calculateAverage() const;
     bool isPassed() const;
     std::string toCsvLine() const;

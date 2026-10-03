@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 
+// Öğrenci Kayıtlarını Yöneten Sınıf (Kontrolcü)
 class StudentManager {
 private:
     std::vector<Student> students;

@@ -48,13 +48,13 @@ bool StudentManager::saveToFile() const {
 
 void StudentManager::addStudent(const Student& student) {
     students.push_back(student);
-    saveToFile(); // Eklendikten sonra hemen kaydet
+    saveToFile(); 
 }
 
 bool StudentManager::deleteStudent(int id) {
     for (auto it = students.begin(); it != students.end(); ++it) {
         if (it->getId() == id) {
-            students.erase(it); // std::vector'ün güvenli silme metodu
+            students.erase(it); 
             saveToFile();
             return true;
         }
@@ -65,7 +65,6 @@ bool StudentManager::deleteStudent(int id) {
 bool StudentManager::updateStudent(int id, float newMid, float newSec, float newFin, float newTask) {
     for (auto& student : students) {
         if (student.getId() == id) {
-            // Varolan değerleri koruyup notları güncelleyen yeni bir obje oluşturuyoruz
             Student updated(id, student.getName(), newMid, newSec, newFin, newTask, student.getAbsences());
             student = updated;
             saveToFile();
