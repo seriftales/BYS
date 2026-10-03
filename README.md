@@ -1,4 +1,4 @@
-Öğrenci Bilgi Yönetim Sistemi 
+# Öğrenci Bilgi Yönetim Sistemi 
 Bu proje,  C++ Nesne Yönelimli Programlama ve Katmanlı Mimari prensipleri kullanılarak oluşturulmuştur 
 
 🏗️ Mimari ve Tasarım Prensipleri
@@ -7,7 +7,7 @@ Tek Sorumluluk Prensibi : Veri modeli  ve iş mantığı/veritabanı işlemleri 
 Dinamik Bellek Yönetimi: Sabit boyutlu C dizileri yerine std::vector kullanılarak bellek taşması riskleri önlenmiştir..
 
 
-🚀 Özellikler
+# 🚀 Özellikler
 Öğrenci Ekleme, Silme ve Güncelleme 
 
 Numaraya göre hızlı arama
@@ -18,7 +18,7 @@ Verilerin students.csv dosyasına kalıcı olarak kaydedilmesi
 
 Etkileşimli tablolar ve QSS ile özelleştirilmiş Material Design yeşil tema.
 
-🛠️ Kurulum ve Bağımlılıklar (Linux / Ubuntu)
+# 🛠️ Kurulum ve Bağımlılıklar (Linux / Ubuntu)
 Projeyi derleyebilmek için sisteminizde C++ derleme araçlarının ve Qt5 kütüphanelerinin kurulu olması gerekmektedir. Terminali açıp aşağıdaki komutu çalıştırın:
 
 ``` bash 
@@ -27,16 +27,16 @@ sudo apt install build-essential cmake qtbase5-dev qt5-qmake
 
 ```
 
-⚙️ Derleme ve Çalıştırma 
+# ⚙️ Derleme ve Çalıştırma 
 Projenin ana dizininde sırasıyla şu komutları çalıştırın:
 
-1.Derleme klasörünü oluşturun ve içine girin:
+ 1.Derleme klasörünü oluşturun ve içine girin:
 ``` bash 
 mkdir build
 cd build
 
 ```
-2.CMake ile Makefile haritasını oluşturun:
+ 2.CMake ile Makefile haritasını oluşturun:
 
 ``` bash 
 cmake ..
@@ -56,8 +56,9 @@ make
 ./OgrenciSistemi
 
 ```
-📁 Proje Dizin Yapısı
+# 📁 Proje Dizin Yapısı
 
+```text 
 .
 ├── CMakeLists.txt        # Proje derleme ve linking kuralları
 ├── main.cpp              # Uygulama giriş noktası 
@@ -71,3 +72,4 @@ make
     ├── mainwindow.h
     ├── mainwindow.cpp
 
+``` 
