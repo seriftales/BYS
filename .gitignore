@@ -1,0 +1,22 @@
+# 1. CMake ve Derleme (Build) Çıktıları
+build/
+CMakeCache.txt
+CMakeFiles/
+Makefile
+*.cmake
+*_autogen/
+
+# 2. Çalıştırılabilir Dosyalar
+OgrenciSistemi
+*.exe
+*.o
+*.out
+
+# 3. IDE ve Çevre Ayarları
+.vscode/
+compile_commands.json
+*.user
+
+# 4. Yerel Veritabanı (Test Verileri)
+students.csv
+*.csv
