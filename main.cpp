@@ -1,117 +1,132 @@
-
 #include <iostream>
-#include <string>
-#include <fstream>
 #include <iomanip>
-#include "student.h"
+#include  "header/studentManager.h"
+
 using namespace std;
 
+void printStudent(const Student& s) {
+    cout << "-----------------------------\n";
+    cout << "İsim: " << s.getName() << "\n";
+    cout << "Numara: " << s.getId() << "\n";
+    cout << "Ortalama: " << fixed << setprecision(2) << s.calculateAverage() << "\n";
+    cout << "Durum: " << (s.isPassed() ? "Geçti" : "Kaldı") << "\n";
+    cout << "-----------------------------\n";
+}
+
+void printStudentList(const vector<Student>& list) {
+    if (list.empty()) {
+        cout << "Kayit bulunamadi.\n";
+        return;
+    }
+    for (const auto& s : list) {
+        printStudent(s);
+    }
+}
 
 int main() {
-    Student student;
+    // Hardcoded yol yerine proje dizininde bir dosya
+    StudentManager manager("students.csv");
+    manager.loadFromFile();
+
     int secim;
-    char devam;
-
-    student.readFromCsv();
-
     do {
-
-        cout << "******************************************************" << endl;
-        cout << "*    OGRENCI BiLGİ YONETİM SISTEMINE  HOSGELDINIZ    *" << endl;
-        cout << "******************************************************" << endl;
-        cout << "Lutfen Yapmak Istediginiz Islemi Seciniz:" << endl;
-        cout << "------------------------------------------" << endl;
-        cout <<"1.Tum Ogrencileri Listele" << endl;
-        cout <<"2.Kalan Ogrencileri Listele" << endl;
-        cout <<"3.Gecen Ogrencileri Listele" << endl;
-        cout <<"4.Verilen Filtreyle Ogrencileri Dosyaya Yazdir" << endl;
-        cout <<"5.Adi Girilen Ogrenci veya Ogrencilerin Bilgilerini Listele"<<endl;
-        cout <<"6.Numarasi Girilen Ogrencinin Bilgilerini Listele"<<endl;
-        cout <<"7.Belirli Bir Not Araligindaki Ogrencileri Listele"<<endl;
-        cout <<"8.Yeni Ogrenci Ekle"<<endl;
-        cout <<"9.Ogrenci Bilgisi Guncelle"<<endl;
-        cout <<"10.Ogrenci Sil"<<endl;
-        cout <<"0.Cikis" << endl;
-        cout << "Seciminizi giriniz (0-10): ";
+        cout << "\n1. Tum Ogrencileri Listele\n"
+             << "2. Gecenleri Listele\n"
+             << "3. Kalanlari Listele\n"
+             << "4. Ogrenci Ekle\n"
+             << "5. Ogrenci Sil\n"
+             << "6. Öğrenci Güncelle\n"
+             << "7. Filtrele\n"
+                << "8. Numaraya Gore Filtrele\n"
+             << "0. Cikis\n"
+             << "Secim: ";
         cin >> secim;
 
-        string dosyaAdi;
-        string studentName;
-        int studentID;
+        if (secim == 1) {
+            printStudentList(manager.getAllStudents());
+        } 
+        else if (secim == 2) {
+            printStudentList(manager.getPassedStudents());
+        } 
+        else if (secim == 3) {
+            printStudentList(manager.getFailedStudents());
+        } 
+        else if (secim == 4) {
+            string ad; int id, devamsizlik;
+            float v1, v2, fin, odev;
+            cout << "Ad: "; cin >> ad;
+            cout << "Numara: "; cin >> id;
+            cout << "Vize 1: "; cin >> v1;
+            cout << "Vize 2: "; cin >> v2;
+            cout << "Final: "; cin >> fin;
+            cout << "Odev: "; cin >> odev;
+            cout << "Devamsizlik: "; cin >> devamsizlik;
 
-        switch (secim) {
-        case 1:
-            student.displayAllStudents();
-            break;
+            manager.addStudent(Student(id, ad, v1, v2, fin, odev, devamsizlik));
+            cout << "Eklendi.\n";
+        }
+        else if (secim == 5) {
+            int id;
+            cout << "Silinecek Numara: "; cin >> id;
+            if (manager.deleteStudent(id)) {
+                cout << "Silindi.\n";
+            } else {
+                cout << "Ogrenci bulunamadi.\n";
+            }
+         }
+    
+        else if (secim == 7) {
+            float minNot, maxNot;
+            cout << "Minimum notu giriniz: "; 
+            cin >> minNot;
+            cout << "Maksimum notu giriniz: "; 
+            cin >> maxNot;
 
-        case 2:
-            student.displayFailed();
-            break;
+            // Backend'den listeyi iste ve yazdırma fonksiyonuna gönder
+            vector<Student> filtrelenmisListe = manager.getStudentsByGradeRange(minNot, maxNot);
+            printStudentList(filtrelenmisListe);
+        }
+    
+        else if (secim == 6) {
+            int id;
+            float yeniVize1, yeniVize2, yeniFinal, yeniOdev;
+            cout << "Guncellenecek ogrencinin numarasi: "; 
+            cin >> id;
+    
+             // Yalnızca aranan numara varsa yeni notları iste
+            if (manager.findStudentById(id) != nullptr) {
+                cout << "Yeni Vize 1: "; cin >> yeniVize1;
+                cout << "Yeni Vize 2: "; cin >> yeniVize2;
+                cout << "Yeni Final: "; cin >> yeniFinal;
+                cout << "Yeni Odev: "; cin >> yeniOdev;
 
-        case 3:
-            student.displayPassed();
-            break;
-
-        case 4:
-            int filter;
-            cout << "Filtreyi giriniz (-1: Tum Ogrenciler, 0: Kalanlar, 1: Gecenler): ";
-            cin >> filter;
-
-            cout << "Dosya adini giriniz (ornek: output.txt): ";
-            cin >> dosyaAdi;
-
-            Student::print(filter, dosyaAdi);
-            cout << "Ogrenciler dosyaya yazildi: " << dosyaAdi << endl;
-            break ;
-
-            case 5 :
-                cout<<"\nAramak istediginiz ogrencinin adini giriniz:";
-                cin>>studentName;
-
-                student.findStudentbyName(studentName);
-                break ;
-            case 6 :
-                cout<<"\nAramak istediginiz ogrencinin numarasini giriniz:";
-                cin>>studentID;
-                student.findStudentbyNumber(studentID);
-                break ;
-
-            case 7:
-                cout<<"Araligi giriniz!"<<endl ;
-                student.filterStudent();
-                break ;
-
-            case 8 :
-                student.writeToCsv();
-                cout<<"Ogrenci bilgisi dosyaya eklendi."<<endl;
-                break ;
-
-            case 9:
-                cout << "Guncellemek istediginiz ogrencinin numarasini giriniz: ";
-                cin >> studentID;
-                student.updateStudent(studentID);
-                break;
-
-            case 10:
-                cout << "Silmek istediginiz ogrencinin numarasini giriniz: ";
-                cin >> studentID;
-                student.deleteStudent(studentID);
-                break;
-
-            case 0:
-                cout<<"Programdan cikiliyor..."<<endl;
-                return 0 ;
-
-
-            default:
-            cout << "Gecersiz secim, tekrar deneyin." << endl;
+            if (manager.updateStudent(id, yeniVize1, yeniVize2, yeniFinal, yeniOdev)) {
+                cout << "Ogrenci basariyla guncellendi.\n";
+            }
+            } else {
+                 cout << "Bu numaraya ait ogrenci bulunamadi!\n";
+            }
         }
 
-        cout << "Devam etmek istiyor musunuz? (E/e): ";
-        cin >> devam;
+        // 8. Seçenek: Numaraya Göre Arama
+        else if (secim == 8) {
+            int arananId;
+            cout << "Aradiginiz ogrencinin numarasini giriniz: ";
+            cin >> arananId;
 
-    } while (devam == 'E' || devam == 'e');
+            // Backend'e sor: Bu numarada biri var mı?
+            const Student* bulunanOgrenci = manager.findStudentById(arananId);
 
-    cout << "Programdan cikiliyor..." << endl;
+            // Eğer öğrenci bulunduysa (pointer boş değilse) yazdır
+            if (bulunanOgrenci != nullptr) {
+                printStudent(*bulunanOgrenci);
+            } else {
+                cout << "Bu numaraya ait bir ogrenci kayitlarda bulunamadi!\n";
+            }
+        }
+    
+    
+        } while (secim != 0);
+
     return 0;
 }
