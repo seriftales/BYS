@@ -1,7 +1,6 @@
 # Öğrenci Bilgi Yönetim Sistemi 
 Bu proje,  C++ Nesne Yönelimli Programlama ve Katmanlı Mimari prensipleri kullanılarak oluşturulmuştur 
 
-🏗️ Mimari ve Tasarım Prensipleri
 Tek Sorumluluk Prensibi : Veri modeli  ve iş mantığı/veritabanı işlemleri tamamen birbirinden izole edilmiştir.
 
 Dinamik Bellek Yönetimi: Sabit boyutlu C dizileri yerine std::vector kullanılarak bellek taşması riskleri önlenmiştir..
@@ -68,7 +67,7 @@ make
 ├── source/               # Sınıf tanımlamaları 
 │   ├── student.cpp
 │   ├── studentmanager.cpp
-└── qt/                   # Arayüz atmanı
+└── qt/                   # Arayüz Katmanı
     ├── mainwindow.h
     ├── mainwindow.cpp
 
